@@ -54,7 +54,7 @@
             overflow-x: hidden;
             transition: background-color 0.3s, color 0.3s, filter 0.3s;
         }
-
+        
         /* --- Sidebar Styling --- */
         .sidebar {
             width: 250px;
@@ -197,7 +197,21 @@
             background-color: #c82333;
             box-shadow: 0 0 10px #dc3545;
         }
+                .locked-btn {
+            background-color: #6c757d !important;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .locked-btn:hover {
+            background-color: #5a6268 !important;
+            box-shadow: none !important;
+        }
         
+        .action-group {
+            display: flex;
+            gap: 10px;
+        }
         .action-group {
             display: flex;
             gap: 10px;
