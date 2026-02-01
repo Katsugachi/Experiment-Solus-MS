@@ -622,6 +622,7 @@
     
     <script>
         const staticGames = [
+            { name: "Hollow Knight: Silksong", cover: "silksong.png", url: "hsur.html", locked: true, code: "4XQRO08HR" },
             { name: "Hollow Knight", cover: "hk.jpg", url: "StrHK.html" },
             { name: "Minecraft 1.21.6", cover: "minecraft.jpg", url: "mc1122.html" },
             { name: "Geometry Dash Lite", cover: "gd.png", url: "gd.html" },
@@ -699,67 +700,67 @@
         const emptyMessage = document.getElementById('empty-library-message');
         let gameOverlayEnabled = false;
 
-        function createGameCard(game, isCustom = false) {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            const coverStyle = game.cover ? `background-image: url('${game.cover}');` : '';
-            let launchUrl = isCustom ? URL.createObjectURL(new Blob([game.htmlContent], { type: 'text/html' })) : game.url;
+function createGameCard(game, isCustom = false) {
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    const coverStyle = game.cover ? `background-image: url('${game.cover}');` : '';
+    let launchUrl = isCustom ? URL.createObjectURL(new Blob([game.htmlContent], { type: 'text/html' })) : game.url;
 
-            card.innerHTML = `
-                <div class="game-image-placeholder" style="${coverStyle}">
-                    ${game.cover ? '' : game.name}
-                </div>
-                <div class="game-info">
-                    <h3>${game.name}</h3>
-                    <div class="action-group">
-                        <a href="${launchUrl}" class="launch-btn" data-game-url="${launchUrl}" target="_blank">Launch</a>
-                        ${isCustom ? `<button class="launch-btn delete-btn" data-game-id="${game.id}" style="flex-grow: 0.5;">Delete</button>` : ''}
-                    </div>
-                </div>
-            `;
-            
-            const launchBtn = card.querySelector('.launch-btn');
-            launchBtn.addEventListener('click', (e) => {
-                if (gameOverlayEnabled) {
-                    e.preventDefault();
-                    window.location.href = launchUrl;
-                }
-            });
-            
-            if (isCustom) {
-                card.querySelector('.delete-btn').addEventListener('click', async (e) => {
-                    const gameId = parseInt(e.target.dataset.gameId);
-                    if (confirm(`Delete ${game.name}?`)) {
-                        await deleteGame(gameId);
-                        loadGames();
-                    }
-                });
+    const isLocked = game.locked && !isCustom;
+    const buttonClass = isLocked ? 'launch-btn locked-btn' : 'launch-btn';
+    const buttonText = isLocked ? '🔒 LOCKED' : 'Launch';
+
+    card.innerHTML = `
+        <div class="game-image-placeholder" style="${coverStyle}">
+            ${game.cover ? '' : game.name}
+        </div>
+        <div class="game-info">
+            <h3>${game.name}</h3>
+            <div class="action-group">
+                <button class="${buttonClass}" data-game-url="${launchUrl}" ${isLocked ? `data-code="${game.code}"` : ''}>${buttonText}</button>
+                ${isCustom ? `<button class="launch-btn delete-btn" data-game-id="${game.id}" style="flex-grow: 0.5;">Delete</button>` : ''}
+            </div>
+        </div>
+    `;
+    
+    const launchBtn = card.querySelector('.launch-btn:not(.delete-btn)');
+    launchBtn.addEventListener('click', (e) => {
+        if (isLocked) {
+            const enteredCode = prompt('Enter unlock code:');
+            if (enteredCode === game.code) {
+                const win = window.open();
+                win.document.body.style.margin = '0';
+                win.document.body.style.height = '100vh';
+                const iframe = win.document.createElement('iframe');
+                iframe.style.border = 'none';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.margin = '0';
+                iframe.src = launchUrl;
+                win.document.body.appendChild(iframe);
+            } else if (enteredCode !== null) {
+                alert('Incorrect code!');
             }
-            return card;
+        } else if (gameOverlayEnabled) {
+            e.preventDefault();
+            window.location.href = launchUrl;
+        } else {
+            e.preventDefault();
+            window.open(launchUrl, '_blank');
         }
-
-        async function loadGames() {
-            gameLibraryGrid.innerHTML = '';
-            staticGames.forEach(game => gameLibraryGrid.appendChild(createGameCard(game, false)));
-            try {
-                const customGames = await getAllGames();
-                customGames.forEach(game => gameLibraryGrid.appendChild(createGameCard(game, true)));
-                emptyMessage.classList.toggle('hidden', (staticGames.length + customGames.length) > 0);
-            } catch (e) { console.error(e); }
-        }
-
-        const navLibrary = document.getElementById('nav-library');
-        const navSettings = document.getElementById('nav-settings');
-        const navAbout = document.getElementById('nav-about');
-        const navAddGame = document.getElementById('nav-add-game');
-        
-        const libraryPage = document.getElementById('library-page');
-        const settingsPage = document.getElementById('settings-page');
-        const aboutPage = document.getElementById('about-page');
-        const addGamePage = document.getElementById('add-game-page');
-        const themeToggle = document.getElementById('theme-toggle');
-        const mainHeader = document.querySelector('.header h2');
-
+    });
+    
+    if (isCustom) {
+        card.querySelector('.delete-btn').addEventListener('click', async (e) => {
+            const gameId = parseInt(e.target.dataset.gameId);
+            if (confirm(`Delete ${game.name}?`)) {
+                await deleteGame(gameId);
+                loadGames();
+            }
+        });
+    }
+    return card;
+}
         function showPage(pageId) {
             [libraryPage, settingsPage, aboutPage, addGamePage].forEach(p => p.style.display = 'none');
             [navLibrary, navSettings, navAbout, navAddGame].forEach(n => n.classList.remove('active'));
