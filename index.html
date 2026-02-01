@@ -721,8 +721,9 @@ function createGameCard(game, isCustom = false) {
             let launchUrl = isCustom ? URL.createObjectURL(new Blob([game.htmlContent], { type: 'text/html' })) : game.url;
 
             const isLocked = game.locked && !isCustom;
-            const buttonClass = isLocked ? 'launch-btn locked-btn' : 'launch-btn';
-            const buttonText = isLocked ? '🔒 LOCKED' : 'Launch';
+            const launchElement = isLocked 
+                ? `<button class="launch-btn locked-btn" data-game-url="${launchUrl}" data-code="${game.code}">LOCKED</button>`
+                : `<a href="${launchUrl}" class="launch-btn" data-game-url="${launchUrl}" target="_blank">Launch</a>`;
 
             card.innerHTML = `
                 <div class="game-image-placeholder" style="${coverStyle}">
@@ -731,15 +732,15 @@ function createGameCard(game, isCustom = false) {
                 <div class="game-info">
                     <h3>${game.name}</h3>
                     <div class="action-group">
-                        <button class="${buttonClass}" data-game-url="${launchUrl}" ${isLocked ? `data-code="${game.code}"` : ''}>${buttonText}</button>
+                        ${launchElement}
                         ${isCustom ? `<button class="launch-btn delete-btn" data-game-id="${game.id}" style="flex-grow: 0.5;">Delete</button>` : ''}
                     </div>
                 </div>
             `;
             
-            const launchBtn = card.querySelector('.launch-btn:not(.delete-btn)');
-            launchBtn.addEventListener('click', (e) => {
-                if (isLocked) {
+            if (isLocked) {
+                const lockBtn = card.querySelector('.locked-btn');
+                lockBtn.addEventListener('click', (e) => {
                     const enteredCode = prompt('Enter unlock code:');
                     if (enteredCode === game.code) {
                         const win = window.open();
@@ -755,14 +756,16 @@ function createGameCard(game, isCustom = false) {
                     } else if (enteredCode !== null) {
                         alert('Incorrect code!');
                     }
-                } else if (gameOverlayEnabled) {
-                    e.preventDefault();
-                    window.location.href = launchUrl;
-                } else {
-                    e.preventDefault();
-                    window.open(launchUrl, '_blank');
-                }
-            });
+                });
+            } else {
+                const launchBtn = card.querySelector('.launch-btn');
+                launchBtn.addEventListener('click', (e) => {
+                    if (gameOverlayEnabled) {
+                        e.preventDefault();
+                        window.location.href = launchUrl;
+                    }
+                });
+            }
             
             if (isCustom) {
                 card.querySelector('.delete-btn').addEventListener('click', async (e) => {
