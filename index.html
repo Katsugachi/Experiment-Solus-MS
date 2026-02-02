@@ -722,7 +722,7 @@ function createGameCard(game, isCustom = false) {
 
             const isLocked = game.locked && !isCustom;
             const launchElement = isLocked 
-                ? `<button class="launch-btn locked-btn" data-game-url="${launchUrl}" data-code="${game.code}">LOCKED</button>`
+                ? `<button class="launch-btn locked-btn" data-game-url="${launchUrl}" data-code="${game.code}">Locked</button>`
                 : `<a href="${launchUrl}" class="launch-btn" data-game-url="${launchUrl}" target="_blank">Launch</a>`;
 
             card.innerHTML = `
