@@ -778,6 +778,29 @@ function createGameCard(game, isCustom = false) {
             }
             return card;
         }
+        async function loadGames() {
+            gameLibraryGrid.innerHTML = '';
+            staticGames.forEach(game => gameLibraryGrid.appendChild(createGameCard(game, false)));
+            try {
+                const customGames = await getAllGames();
+                customGames.forEach(game => gameLibraryGrid.appendChild(createGameCard(game, true)));
+                emptyMessage.classList.toggle('hidden', (staticGames.length + customGames.length) > 0);
+            } catch (e) { console.error(e); }
+        }
+
+        const navLibrary = document.getElementById('nav-library');
+        const navSettings = document.getElementById('nav-settings');
+        const navAbout = document.getElementById('nav-about');
+        const navAddGame = document.getElementById('nav-add-game');
+        
+        const libraryPage = document.getElementById('library-page');
+        const settingsPage = document.getElementById('settings-page');
+        const aboutPage = document.getElementById('about-page');
+        const addGamePage = document.getElementById('add-game-page');
+        const themeToggle = document.getElementById('theme-toggle');
+        const mainHeader = document.querySelector('.header h2');
+
+        function showPage(pageId) {
         function showPage(pageId) {
             [libraryPage, settingsPage, aboutPage, addGamePage].forEach(p => p.style.display = 'none');
             [navLibrary, navSettings, navAbout, navAddGame].forEach(n => n.classList.remove('active'));
