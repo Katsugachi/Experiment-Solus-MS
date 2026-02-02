@@ -801,7 +801,6 @@ function createGameCard(game, isCustom = false) {
         const mainHeader = document.querySelector('.header h2');
 
         function showPage(pageId) {
-        function showPage(pageId) {
             [libraryPage, settingsPage, aboutPage, addGamePage].forEach(p => p.style.display = 'none');
             [navLibrary, navSettings, navAbout, navAddGame].forEach(n => n.classList.remove('active'));
 
