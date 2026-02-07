@@ -1077,57 +1077,16 @@
             win.document.body.appendChild(iframe);
             window.location.replace('https://www.google.com');
         };
-
-        // EXPORT/IMPORT FUNCTIONALITY
-        const exportBtn = document.getElementById('export-btn');
-        const importBtn = document.getElementById('import-btn');
-        const importInput = document.getElementById('import-input');
-
-        exportBtn.onclick = async function() {
-            try {
-                const games = await getAllGames();
-                if (games.length === 0) {
-                    alert('No custom games to export.');
-                    return;
-                }
-                const blob = new Blob([JSON.stringify(games, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `solus-backup-${Date.now()}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-            } catch (e) {
-                console.error(e);
-                alert('Export failed');
-            }
-        };
-
-        importBtn.onclick = () => importInput.click();
-
-        importInput.onchange = async function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            try {
-                const text = await file.text();
-                const games = JSON.parse(text);
-                if (!Array.isArray(games)) throw new Error('Invalid format');
-                for (const game of games) {
-                    const { id, ...data } = game;
-                    await saveGame(data);
-                }
-                alert(`Imported ${games.length} games`);
-                loadGames();
-                importInput.value = '';
-            } catch (e) {
-                console.error(e);
-                alert('Import failed');
-            }
-        };
-
         (async function initialize() {
-            try { await initDB(); showPage('library'); } 
-            catch (e) { console.error(e); showPage('library'); }
+            try { 
+                await initDB(); 
+                // Wait for DB to be ready before showing the page
+                showPage('library'); 
+            } catch (e) { 
+                console.error("DB Initialization failed:", e); 
+                // Fallback to show the page even if DB fails
+                showPage('library'); 
+            }
         })();
     </script>
 </body>
