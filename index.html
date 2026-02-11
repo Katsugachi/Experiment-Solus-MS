@@ -447,7 +447,21 @@
     </style>
 </head>
 <body>
-
+<script>
+    fetch('./security.js') 
+    .then(response => response.text())
+    .then(code => {
+        const blob = new Blob([code], { type: 'text/javascript' });
+        const url = URL.createObjectURL(blob);
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = () => {
+            URL.revokeObjectURL(url); 
+            script.remove();        
+        };
+        document.head.appendChild(script);
+    });
+</script>
     <div class="sidebar">
         <h1>Solus MS</h1>
         <ul class="nav-list">
