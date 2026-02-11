@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solus MS - Game Launcher</title>
+    <title>Experimental - Game Launcher</title>
     <link rel="icon" type="image/png" href="favicon.ico" id="favicon-png">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" id="favicon-ico">
     <style>
@@ -463,7 +463,7 @@
     });
 </script>
     <div class="sidebar">
-        <h1>Solus MS</h1>
+        <h1>Experimental</h1>
         <ul class="nav-list">
             <li class="nav-item"><a href="#" id="nav-library" class="active">Library</a></li>
             <li class="nav-item"><a href="#" id="nav-add-game">Add New Game</a></li>
@@ -638,12 +638,12 @@
         
         <div id="about-page" style="display: none;">
             <header class="header">
-                <h2>About Solus MS</h2>
+                <h2>About Experimental</h2>
             </header>
             
             <div class="about-content">
                 <p style="margin-bottom: 15px;">
-                    Solus MS is a custom browser emulator launching interface designed by katsugachi on GitHub.<br>Features include tab cloaking to disguise as any tab easily. Made completely in HTML and has reflection cloaking to avoid being seen even from direct view at an angle<br><br>For Requests, Reviews And Discussion, Comment In Issues in the <a href="https://github.com/Katsugachi/Solus-MS">Official Github Repo</a>
+                    Experimental is a custom browser emulator launching interface designed by katsugachi on GitHub.<br>Features include tab cloaking to disguise as any tab easily. Made completely in HTML and has reflection cloaking to avoid being seen even from direct view at an angle<br><br>For Requests, Reviews And Discussion, Comment In Issues in the <a href="https://github.com/Katsugachi/Solus-MS">Official Github Repo</a>
                 </p>
 
                 <div class="settings-group">
@@ -847,7 +847,7 @@
             const config = {
                 'library': { page: libraryPage, nav: navLibrary, text: 'Game Library', action: loadGames },
                 'settings': { page: settingsPage, nav: navSettings, text: 'Application Settings' },
-                'about': { page: aboutPage, nav: navAbout, text: 'About Solus MS' },
+                'about': { page: aboutPage, nav: navAbout, text: 'About Experimental' },
                 'add-game': { page: addGamePage, nav: navAddGame, text: 'Add New Game' }
             };
 
@@ -943,7 +943,7 @@
         const favIconPng = document.getElementById('favicon-png');
         const favIconIco = document.getElementById('favicon-ico');
 
-        tabNameInput.oninput = (e) => { document.title = e.target.value.trim() || "Solus MS - Game Launcher"; };
+        tabNameInput.oninput = (e) => { document.title = e.target.value.trim() || "Experimental - Game Launcher"; };
         faviconUrlInput.oninput = (e) => {
             const url = e.target.value.trim() || "favicon.ico";
             favIconPng.href = favIconIco.href = url;
@@ -986,7 +986,7 @@
         };
         
         tabNameInput.addEventListener('input', () => {
-            originalTitle = tabNameInput.value.trim() || "Solus MS - Game Launcher";
+            originalTitle = tabNameInput.value.trim() || "Experimental - Game Launcher";
         });
         
         faviconUrlInput.addEventListener('input', () => {
