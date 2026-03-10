@@ -159,20 +159,7 @@
         <div class="auth-section">
             <div class="auth-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg> Cloud Account</div>
             <div id="google-btn-wrapper">
-                <div id="g_id_onload"
-                     data-client_id="1029543759834-et9pr2p7r9nr5oohrch9vc07nl1q6jds.apps.googleusercontent.com"
-                     data-callback="handleGoogleSignIn"
-                     data-auto_prompt="false">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-size="medium"
-                     data-theme="filled_blue"
-                     data-text="sign_in_with"
-                     data-shape="rectangular"
-                     data-logo_alignment="left"
-                     data-width="218">
-                </div>
+                <button id="google-signin-btn" class="launch-btn" style="width:218px;">Sign in with Google</button>
             </div>
             <div class="user-info-card" id="user-info-card">
                 <img class="user-avatar" id="user-avatar" src="" alt="">
@@ -397,6 +384,51 @@
     </div>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script>
+        const CLIENT_ID = "1029543759834-et9pr2p7r9nr5oohrch9vc07nl1q6jds.apps.googleusercontent.com";
+        let tokenClient = null;
+
+        const waitForGSI = setInterval(() => {
+            if (typeof google === 'undefined' || !google.accounts) return;
+            clearInterval(waitForGSI);
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: 'openid email profile',
+                callback: async (tokenResponse) => {
+                    if (tokenResponse.error) { setStatus('error', 'Google sign-in failed'); return; }
+                    const accessToken = tokenResponse.access_token;
+                    const profile = await (await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        headers: { Authorization: 'Bearer ' + accessToken }
+                    })).json();
+                    document.getElementById('google-btn-wrapper').style.display = 'none';
+                    document.getElementById('user-info-card').classList.add('visible');
+                    document.getElementById('user-avatar').src        = profile.picture || '';
+                    document.getElementById('user-name').textContent  = profile.name   || 'User';
+                    document.getElementById('user-email').textContent = profile.email  || '';
+                    setStatus('connecting', 'Connecting to CloudMoon…');
+                    try {
+                        const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(accessToken));
+                        const data = await res.json();
+                        if (data.error) throw new Error(data.error);
+                        cloudSession = {
+                            token:      data.token,
+                            user_id:    data.user_id,
+                            android_id: data.phone_list?.data?.list?.[0]?.android_id || '1951154706843701248'
+                        };
+                        setStatus('connected', 'CloudMoon connected ✓');
+                        loadGames();
+                    } catch(err) {
+                        setStatus('error', 'Cloud auth failed: ' + err.message);
+                    }
+                }
+            });
+        }, 100);
+
+        document.getElementById('google-signin-btn').onclick = () => {
+            if (tokenClient) tokenClient.requestAccessToken();
+        };
+        </script>
     <script>
         // ════════════════════════════════════════════════════
         //  CLOUDMOON CONFIG
@@ -424,33 +456,7 @@
         function setStatus(cls, txt) { statusDot.className = 'status-dot' + (cls ? ' '+cls : ''); statusText.textContent = txt; }
 
         // ── GOOGLE SIGN-IN ────────────────────────────────────
-        async function handleGoogleSignIn(response) {
-            const idToken = response.credential;
-            const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
-            document.getElementById('google-btn-wrapper').style.display = 'none';
-            const card = document.getElementById('user-info-card');
-            card.classList.add('visible');
-            document.getElementById('user-avatar').src        = payload.picture || '';
-            document.getElementById('user-name').textContent  = payload.name   || 'User';
-            document.getElementById('user-email').textContent = payload.email  || '';
-            setStatus('connecting', 'Connecting to CloudMoon\u2026');
-            try {
-                const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(idToken));
-                const data = await res.json();
-                if (data.error) throw new Error(data.error);
-                cloudSession = {
-                    token:      data.token,
-                    user_id:    data.user_id,
-                    android_id: (data.phone_list && data.phone_list.data && data.phone_list.data.list && data.phone_list.data.list[0]) ? data.phone_list.data.list[0].android_id : '1951154706843701248'
-                };
-                setStatus('connected', 'CloudMoon connected \u2713');
-                loadGames();
-            } catch(err) {
-                console.error(err);
-                setStatus('error', 'Cloud auth failed');
-            }
-        }
-
+    
         document.getElementById('sign-out-btn').onclick = function() {
             cloudSession = null;
             document.getElementById('user-info-card').classList.remove('visible');
