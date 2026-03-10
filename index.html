@@ -718,29 +718,29 @@
         })();
     </script>
     <script>
-        const CLIENT_ID = "1029543759834-et9pr2p7r9nr5oohrch9vc07nl1q6jds.apps.googleusercontent.com";
-        let tokenClient = null;
+        const CLIENT_ID = "196443591263-k5447s9icscrq54n57j29lmvm05addbe.apps.googleusercontent.com";
 
         const waitForGSI = setInterval(() => {
             if (typeof google === 'undefined' || !google.accounts) return;
             clearInterval(waitForGSI);
-            tokenClient = google.accounts.oauth2.initTokenClient({
+
+            google.accounts.id.initialize({
                 client_id: CLIENT_ID,
-                scope: 'openid email profile',
-                callback: async (tokenResponse) => {
-                    if (tokenResponse.error) { setStatus('error', 'Google sign-in failed'); return; }
-                    const accessToken = tokenResponse.access_token;
-                    const profile = await (await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                        headers: { Authorization: 'Bearer ' + accessToken }
-                    })).json();
+                callback: async (response) => {
+                    const idToken = response.credential;
+
+                    // Decode profile from the JWT
+                    const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+
                     document.getElementById('google-btn-wrapper').style.display = 'none';
                     document.getElementById('user-info-card').classList.add('visible');
-                    document.getElementById('user-avatar').src        = profile.picture || '';
-                    document.getElementById('user-name').textContent  = profile.name   || 'User';
-                    document.getElementById('user-email').textContent = profile.email  || '';
+                    document.getElementById('user-avatar').src        = payload.picture || '';
+                    document.getElementById('user-name').textContent  = payload.name   || 'User';
+                    document.getElementById('user-email').textContent = payload.email  || '';
+
                     setStatus('connecting', 'Connecting to CloudMoon…');
                     try {
-                        const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(accessToken));
+                        const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(idToken));
                         const data = await res.json();
                         if (data.error) throw new Error(data.error);
                         cloudSession = {
@@ -755,11 +755,11 @@
                     }
                 }
             });
-        }, 100);
 
-        document.getElementById('google-signin-btn').onclick = () => {
-            if (tokenClient) tokenClient.requestAccessToken();
-        };
+            document.getElementById('google-signin-btn').onclick = () => {
+                google.accounts.id.prompt();
+            };
+        }, 100);
     </script>
 </body>
 </html>
