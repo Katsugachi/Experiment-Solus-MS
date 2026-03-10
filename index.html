@@ -597,7 +597,7 @@
             gameLibraryGrid.innerHTML = '';
             gameLibraryGrid.appendChild(makeDivider('Browser Games'));
             staticGames.forEach(function(g) { gameLibraryGrid.appendChild(createGameCard(g, false)); });
-            gameLibraryGrid.appendChild(makeDivider(cloudSVG + ' Cloud Games — Sign In to Stream'));
+            gameLibraryGrid.appendChild(makeDivider(cloudSVG + ' Cloud Games — Sign In to Play'));
             CLOUD_GAMES.forEach(function(g) { gameLibraryGrid.appendChild(createCloudCard(g)); });
             try {
                 var customGames = await getAllGames();
