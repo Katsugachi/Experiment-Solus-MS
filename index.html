@@ -718,48 +718,48 @@
         })();
     </script>
     <script>
-        const CLIENT_ID = "196443591263-k5447s9icscrq54n57j29lmvm05addbe.apps.googleusercontent.com";
+        document.getElementById('google-signin-btn').onclick = () => {
+            const popup = window.open(
+                CLOUD_API + '/auth/google',
+                'cloudmoon-auth',
+                'width=500,height=600,left=' + (screen.width/2 - 250) + ',top=' + (screen.height/2 - 300)
+            );
 
-        const waitForGSI = setInterval(() => {
-            if (typeof google === 'undefined' || !google.accounts) return;
-            clearInterval(waitForGSI);
+            setStatus('connecting', 'Waiting for Google sign in…');
 
-            google.accounts.id.initialize({
-                client_id: CLIENT_ID,
-                callback: async (response) => {
-                    const idToken = response.credential;
+            window.addEventListener('message', async function handler(event) {
+                if (event.data?.type !== 'CLOUDMOON_AUTH') return;
+                window.removeEventListener('message', handler);
 
-                    // Decode profile from the JWT
-                    const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
-
-                    document.getElementById('google-btn-wrapper').style.display = 'none';
-                    document.getElementById('user-info-card').classList.add('visible');
-                    document.getElementById('user-avatar').src        = payload.picture || '';
-                    document.getElementById('user-name').textContent  = payload.name   || 'User';
-                    document.getElementById('user-email').textContent = payload.email  || '';
-
-                    setStatus('connecting', 'Connecting to CloudMoon…');
-                    try {
-                        const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(idToken));
-                        const data = await res.json();
-                        if (data.error) throw new Error(data.error);
-                        cloudSession = {
-                            token:      data.token,
-                            user_id:    data.user_id,
-                            android_id: data.phone_list?.data?.list?.[0]?.android_id || '1951154706843701248'
-                        };
-                        setStatus('connected', 'CloudMoon connected ✓');
-                        loadGames();
-                    } catch(err) {
-                        setStatus('error', 'Cloud auth failed: ' + err.message);
-                    }
+                const data = event.data.session;
+                if (data.error) {
+                    setStatus('error', 'Auth failed: ' + data.error);
+                    return;
                 }
+
+                cloudSession = {
+                    token:      data.token,
+                    user_id:    data.user_id,
+                    android_id: data.android_id
+                };
+
+                document.getElementById('google-btn-wrapper').style.display = 'none';
+                document.getElementById('user-info-card').classList.add('visible');
+                document.getElementById('user-name').textContent  = 'Connected';
+                document.getElementById('user-email').textContent = 'CloudMoon account linked';
+                document.getElementById('user-avatar').src        = '';
+
+                setStatus('connected', 'CloudMoon connected ✓');
+                loadGames();
             });
 
-            document.getElementById('google-signin-btn').onclick = () => {
-                google.accounts.id.prompt();
-            };
-        }, 100);
+            const checkClosed = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
+                    if (!cloudSession) setStatus('error', 'Sign in cancelled');
+                }
+            }, 500);
+        };
     </script>
 </body>
 </html>
