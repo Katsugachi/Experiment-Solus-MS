@@ -721,38 +721,43 @@
         document.getElementById('google-signin-btn').onclick = () => {
             setStatus('connecting', 'Waiting for Google sign in…');
 
-            google.accounts.id.initialize({
-                client_id: '196443591263-k5447s9icscrq54n57j29lmvm05addbe.apps.googleusercontent.com',
-                callback: async (response) => {
-                    const idToken = response.credential;
-                    const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+            const nonce = crypto.randomUUID();
 
-                    document.getElementById('google-btn-wrapper').style.display = 'none';
-                    document.getElementById('user-info-card').classList.add('visible');
-                    document.getElementById('user-avatar').src        = payload.picture || '';
-                    document.getElementById('user-name').textContent  = payload.name   || 'User';
-                    document.getElementById('user-email').textContent = payload.email  || '';
+            const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
+            authUrl.searchParams.set('client_id',     '196443591263-k5447s9icscrq54n57j29lmvm05addbe.apps.googleusercontent.com');
+            authUrl.searchParams.set('redirect_uri',  'postmessage');
+            authUrl.searchParams.set('response_type', 'id_token');
+            authUrl.searchParams.set('scope',         'openid email profile');
+            authUrl.searchParams.set('nonce',         nonce);
+            authUrl.searchParams.set('prompt',        'select_account');
 
-                    setStatus('connecting', 'Connecting to CloudMoon…');
-                    try {
-                        const res  = await fetch(CLOUD_API + '/user-info?gid=' + encodeURIComponent(idToken));
-                        const data = await res.json();
-                        if (data.error) throw new Error(data.error);
-                        cloudSession = {
-                            token:      data.token,
-                            user_id:    data.user_id,
-                            android_id: data.android_id || '1951154706843701248'
-                        };
-                        setStatus('connected', 'CloudMoon connected ✓');
-                        loadGames();
-                    } catch(err) {
-                        setStatus('error', 'Cloud auth failed: ' + err.message);
-                    }
-                },
-                use_fedcm_for_prompt: true
+            const popup = window.open(authUrl.toString(), 'google-auth', 'width=500,height=600,left=' + (screen.width/2-250) + ',top=' + (screen.height/2-300));
+
+            window.addEventListener('message', async function handler(event) {
+                if (!event.data?.id_token && !event.data?.credential) return;
+                window.removeEventListener('message', handler);
+
+                const idToken = event.data.id_token || event.data.credential;
+                const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+
+                document.getElementById('google-btn-wrapper').style.display = 'none';
+                document.getElementById('user-info-card').classList.add('visible');
+                document.getElementById('user-avatar').src        = payload.picture || '';
+                document.getElementById('user-name').textContent  = payload.name   || 'User';
+                document.getElementById('user-email').textContent = payload.email  || '';
+
+                setStatus('connecting', 'Connecting to CloudMoon…');
+                try {
+                    const res  = await fetch(CLOUD_API + '/auth/exchange?id_token=' + encodeURIComponent(idToken));
+                    const data = await res.json();
+                    if (data.error) throw new Error(data.error);
+                    cloudSession = { token: data.token, user_id: data.user_id, android_id: data.android_id };
+                    setStatus('connected', 'CloudMoon connected ✓');
+                    loadGames();
+                } catch(err) {
+                    setStatus('error', 'Cloud auth failed: ' + err.message);
+                }
             });
-
-            google.accounts.id.prompt();
         };
     </script>
 </body>
