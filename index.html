@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="favicon.ico" id="favicon-png">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" id="favicon-ico">
     <style>
-        /* General Reset and Base Styles */
         :root {
             --bg-dark: #1e283a;
             --bg-medium: #28384d;
@@ -20,42 +19,20 @@
             --light-text-light: #333333;
             --light-border-color: #cccccc;
         }
-        .light-theme {
-            --bg-dark: var(--light-bg-dark);
-            --bg-medium: var(--light-bg-medium);
-            --text-light: var(--light-text-light);
-            --border-color: var(--light-border-color);
-            color: var(--light-text-light);
-        }
-        .glass-theme {
-            --bg-dark: #050a12;
-            --bg-medium: rgba(15, 23, 42, 0.4);
-            --text-light: #ffffff;
-            --accent-blue: #007aff;
-            --accent-hover: #0a84ff;
-            --border-color: rgba(255, 255, 255, 0.15);
-            background: radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.3) 0, transparent 50%), radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.2) 0, transparent 50%), #050a12;
-            background-attachment: fixed;
-            color: #ffffff;
-        }
-        .glass-theme .game-card, .glass-theme .settings-group, .glass-theme .sidebar {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(40px) saturate(200%) brightness(0.8);
-            -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        }
-        .glass-theme h1, .glass-theme h2, .glass-theme h3 { text-shadow: 0 0 15px rgba(255, 255, 255, 0.2); letter-spacing: 1px; }
-        .glass-theme .nav-item a:hover { background: rgba(255, 255, 255, 0.1); backdrop-filter: brightness(1.2); }
-        .glass-theme .nav-item a.active { background: rgba(0, 122, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(0, 122, 255, 0.3); }
-        .glass-theme .text-input, .glass-theme .textarea-input { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; }
+        .light-theme { --bg-dark: var(--light-bg-dark); --bg-medium: var(--light-bg-medium); --text-light: var(--light-text-light); --border-color: var(--light-border-color); color: var(--light-text-light); }
+        .glass-theme { --bg-dark: #050a12; --bg-medium: rgba(15,23,42,0.4); --text-light: #ffffff; --accent-blue: #007aff; --accent-hover: #0a84ff; --border-color: rgba(255,255,255,0.15); background: radial-gradient(at 0% 0%, rgba(30,58,138,0.3) 0,transparent 50%), radial-gradient(at 100% 0%, rgba(139,92,246,0.2) 0,transparent 50%), #050a12; background-attachment: fixed; color: #ffffff; }
+        .glass-theme .game-card, .glass-theme .settings-group, .glass-theme .sidebar { background: rgba(255,255,255,0.03); backdrop-filter: blur(40px) saturate(200%) brightness(0.8); -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(0.8); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px 0 rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.05); }
+        .glass-theme h1, .glass-theme h2, .glass-theme h3 { text-shadow: 0 0 15px rgba(255,255,255,0.2); letter-spacing: 1px; }
+        .glass-theme .nav-item a:hover { background: rgba(255,255,255,0.1); backdrop-filter: brightness(1.2); }
+        .glass-theme .nav-item a.active { background: rgba(0,122,255,0.4); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(0,122,255,0.3); }
+        .glass-theme .text-input, .glass-theme .textarea-input { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; }
         .reflection-active { filter: grayscale(1) brightness(0.4) !important; transition: filter 0.4s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-dark); color: var(--text-light); display: flex; min-height: 100vh; overflow-x: hidden; transition: background-color 0.3s, color 0.3s, filter 0.3s; }
         select.text-input { appearance: none; background: var(--bg-medium); color: var(--text-light); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; cursor: pointer; outline: none; }
-        .glass-theme select.text-input { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1); }
+        .glass-theme select.text-input { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); box-shadow: inset 0 0 5px rgba(255,255,255,0.1); }
         .glass-theme select.text-input option { background-color: #1a1a1a; color: white; }
-        .sidebar { width: 250px; background-color: var(--bg-medium); padding: 20px 0; box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); border-right: 1px solid var(--border-color); flex-shrink: 0; transition: background-color 0.3s, border-color 0.3s; }
+        .sidebar { width: 250px; background-color: var(--bg-medium); padding: 20px 0; box-shadow: 2px 0 5px rgba(0,0,0,0.5); border-right: 1px solid var(--border-color); flex-shrink: 0; transition: background-color 0.3s, border-color 0.3s; }
         .sidebar h1 { font-size: 1.5rem; text-align: center; margin-bottom: 20px; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 2px; }
         .nav-list { list-style: none; padding: 0 15px; }
         .nav-item a { display: block; padding: 12px 15px; margin-bottom: 5px; color: var(--text-light); text-decoration: none; border-radius: 4px; transition: background-color 0.2s, color 0.2s; }
@@ -65,9 +42,9 @@
         .header { margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; transition: border-color 0.3s; }
         .header h2 { font-size: 2rem; color: var(--text-light); font-weight: 300; }
         .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .game-card { background-color: var(--bg-medium); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transition: transform 0.2s, background-color 0.3s; }
+        .game-card { background-color: var(--bg-medium); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s, background-color 0.3s; }
         .game-card:hover { transform: translateY(-5px); }
-        .game-image-placeholder { width: 100%; height: 150px; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #384e68; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid var(--border-color); position: relative; }
+        .game-image-placeholder { width: 100%; height: 150px; background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #384e68; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: rgba(255,255,255,0.5); border-bottom: 1px solid var(--border-color); position: relative; }
         .game-info { padding: 15px; }
         .game-info h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .launch-btn { display: block; width: 100%; padding: 10px; background-color: var(--accent-blue); color: white; text-align: center; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: background-color 0.2s, box-shadow 0.2s; }
@@ -88,8 +65,8 @@
         .file-input-container input[type="file"] { padding: 8px; }
         .game-upload-options { display: flex; gap: 20px; margin-bottom: 15px; }
         .upload-option { flex: 1; padding: 15px; border: 2px solid var(--border-color); border-radius: 6px; cursor: pointer; transition: border-color 0.2s, background-color 0.2s; text-align: center; }
-        .upload-option:hover { border-color: var(--accent-blue); background-color: rgba(0, 123, 255, 0.1); }
-        .upload-option.active-option { border-color: var(--accent-blue); background-color: rgba(0, 123, 255, 0.2); box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); }
+        .upload-option:hover { border-color: var(--accent-blue); background-color: rgba(0,123,255,0.1); }
+        .upload-option.active-option { border-color: var(--accent-blue); background-color: rgba(0,123,255,0.2); box-shadow: 0 0 8px rgba(0,123,255,0.5); }
         .radio-hidden { display: none; }
         .hidden { display: none !important; }
         .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
@@ -102,8 +79,6 @@
         .setting-item:first-child { border-top: none; }
         .about-content a { color: var(--text-light); text-decoration: underline; text-decoration-color: var(--accent-blue); transition: color 0.2s; }
         .about-content a:hover { color: var(--accent-blue); }
-
-        /* ── ADDED: Auth sidebar ── */
         .auth-section { padding: 0 15px 15px; }
         .auth-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
         .user-info-card { display: none; align-items: center; gap: 8px; }
@@ -119,14 +94,8 @@
         .status-dot.connected  { background: #2ecc71; }
         .status-dot.connecting { background: #f39c12; }
         .status-dot.error      { background: #e74c3c; }
-
-        /* ── ADDED: Cloud card badge ── */
         .cloud-badge { position: absolute; top: 8px; right: 8px; background: var(--accent-blue); color: #fff; font-size: 0.58rem; padding: 2px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* ── ADDED: Library section divider ── */
         .section-divider { grid-column: 1 / -1; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-blue); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-top: 8px; }
-
-        /* ── ADDED: Cloud launch modal ── */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; }
         .modal-overlay.open { display: flex; }
         .modal-box { background: var(--bg-medium); border: 1px solid var(--border-color); border-radius: 8px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.8); }
@@ -136,8 +105,6 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .modal-close { background: none; border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-light); font-size: 0.8rem; padding: 6px 16px; cursor: pointer; }
         .modal-close:hover { border-color: var(--accent-blue); }
-
-        /* ── ADDED: About page cloud section ── */
         .about-cloud-hero { background: linear-gradient(135deg, #0d1b2e 0%, #1a3a5c 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 28px; margin-bottom: 25px; position: relative; overflow: hidden; }
         .about-cloud-hero::before { content: '\2601'; position: absolute; right: 20px; top: 5px; font-size: 7rem; opacity: 0.06; pointer-events: none; }
         .about-cloud-hero h2 { color: #fff; font-size: 1.5rem; margin-bottom: 8px; }
@@ -154,10 +121,8 @@
 
     <div class="sidebar">
         <h1>Solus MS</h1>
-
-        <!-- ADDED: Google Sign-In -->
         <div class="auth-section">
-            <div class="auth-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg> Cloud Account</div>
+            <div class="auth-label">&#9729; Cloud Account</div>
             <div id="google-btn-wrapper">
                 <button id="google-signin-btn" class="launch-btn" style="width:218px;font-size:0.8rem;">Connect CloudMoon</button>
             </div>
@@ -170,13 +135,10 @@
                 <button class="sign-out-btn" id="sign-out-btn">Sign Out</button>
             </div>
         </div>
-
-        <!-- ADDED: Cloud status -->
         <div class="cloud-status">
             <div class="status-dot" id="status-dot"></div>
             <span id="status-text">Not connected</span>
         </div>
-
         <ul class="nav-list">
             <li class="nav-item"><a href="#" id="nav-library" class="active">Library</a></li>
             <li class="nav-item"><a href="#" id="nav-add-game">Add New Game</a></li>
@@ -188,16 +150,14 @@
     <div class="main-content">
 
         <div id="library-page">
-            <header class="header">
-                <h2>Game Library</h2>
-            </header>
+            <header class="header"><h2>Game Library</h2></header>
             <div class="game-grid" id="game-library-grid"></div>
-            <p id="empty-library-message" style="text-align: center; padding: 50px; color: #7f8fa6;" class="hidden">
+            <p id="empty-library-message" style="text-align:center;padding:50px;color:#7f8fa6;" class="hidden">
                 Your custom library is empty. Add a new game using the "Add New Game" tab!
             </p>
         </div>
 
-        <div id="add-game-page" style="display: none;">
+        <div id="add-game-page" style="display:none;">
             <header class="header"><h2>Add New Game</h2></header>
             <form id="add-game-form" class="settings-group">
                 <div class="form-group">
@@ -235,31 +195,31 @@
                     </div>
                 </div>
                 <div class="form-group" id="html-paste-group">
-                    <label for="html-code">Paste Full HTML File Content Here (index.html or similar)</label>
-                    <textarea id="html-code" class="textarea-input" name="html-code" placeholder="<!DOCTYPE html>... the full HTML code..."></textarea>
+                    <label for="html-code">Paste Full HTML File Content Here</label>
+                    <textarea id="html-code" class="textarea-input" name="html-code" placeholder="<!DOCTYPE html>..."></textarea>
                 </div>
                 <div class="form-group hidden" id="html-file-group">
                     <label for="html-file">Upload HTML File (.html or .htm)</label>
                     <div class="file-input-container"><input type="file" id="html-file" accept=".html,.htm"></div>
                 </div>
-                <button type="submit" class="launch-btn" style="margin-top: 20px;">Save Game to Library</button>
+                <button type="submit" class="launch-btn" style="margin-top:20px;">Save Game to Library</button>
             </form>
-            <p id="game-status-message" style="margin-top: 20px; text-align: center;"></p>
+            <p id="game-status-message" style="margin-top:20px;text-align:center;"></p>
         </div>
 
-        <div id="settings-page" style="display: none;">
+        <div id="settings-page" style="display:none;">
             <header class="header"><h2>Application Settings</h2></header>
             <div class="settings-group">
                 <h3>Interface</h3>
                 <div class="setting-item">
                     <span>Tab Cloak (Change Tab Display Name)</span>
-                    <input type="text" id="tab-name-input" class="text-input" placeholder="e.g., Google" style="width: 250px;">
+                    <input type="text" id="tab-name-input" class="text-input" placeholder="e.g., Google" style="width:250px;">
                 </div>
                 <div class="setting-item">
-                    <span>Tab Logo Cloak URL (Change Tab Display Logo)</span>
-                    <div style="text-align: right;">
-                        <input type="text" id="favicon-url-input" class="text-input" placeholder="https://google.com/favicon.ico" style="width: 250px;">
-                        <br><a href="https://katsugachi.github.io/Favicon-Yoinker/" target="_blank" style="color: var(--accent-blue); font-size: 0.85rem; text-decoration: none;">Tab Cloak Logo Fetcher</a>
+                    <span>Tab Logo Cloak URL</span>
+                    <div style="text-align:right;">
+                        <input type="text" id="favicon-url-input" class="text-input" placeholder="https://google.com/favicon.ico" style="width:250px;">
+                        <br><a href="https://katsugachi.github.io/Favicon-Yoinker/" target="_blank" style="color:var(--accent-blue);font-size:0.85rem;text-decoration:none;">Tab Cloak Logo Fetcher</a>
                     </div>
                 </div>
                 <div class="setting-item">
@@ -270,27 +230,27 @@
                     <span>Panic Key (Press ESC to Quick-Switch)</span>
                     <label class="switch"><input type="checkbox" id="panic-key-toggle"><span class="slider"></span></label>
                 </div>
-                <div id="panic-settings-group" style="display: none; flex-direction: column; gap: 10px; padding-left: 20px; margin-top: 10px;">
-                    <div class="setting-item" style="border-top: none; padding-top: 0;">
+                <div id="panic-settings-group" style="display:none;flex-direction:column;gap:10px;padding-left:20px;margin-top:10px;">
+                    <div class="setting-item" style="border-top:none;padding-top:0;">
                         <span>Panic Mode</span>
-                        <select id="panic-mode-select" class="text-input" style="width: 200px;">
+                        <select id="panic-mode-select" class="text-input" style="width:200px;">
                             <option value="redirect">Simple Redirect</option>
                             <option value="background">Background Tab Switch</option>
                         </select>
                     </div>
-                    <div class="setting-item" id="panic-redirect-setting" style="border-top: none;">
+                    <div class="setting-item" id="panic-redirect-setting" style="border-top:none;">
                         <span>Redirect URL</span>
-                        <input type="text" id="panic-url-input" class="text-input" placeholder="https://classroom.google.com" style="width: 250px;">
+                        <input type="text" id="panic-url-input" class="text-input" placeholder="https://classroom.google.com" style="width:250px;">
                     </div>
-                    <div class="setting-item" id="panic-background-setting" style="display: none; border-top: none;">
+                    <div class="setting-item" id="panic-background-setting" style="display:none;border-top:none;">
                         <span>Background Tab URL</span>
-                        <input type="text" id="panic-background-url" class="text-input" placeholder="https://classroom.google.com" style="width: 250px;">
-                        <button class="launch-btn" id="open-background-tab" style="width: 150px; padding: 8px; margin-left: 10px;">Open Background Tab</button>
+                        <input type="text" id="panic-background-url" class="text-input" placeholder="https://classroom.google.com" style="width:250px;">
+                        <button class="launch-btn" id="open-background-tab" style="width:150px;padding:8px;margin-left:10px;">Open Background Tab</button>
                     </div>
                 </div>
                 <div class="setting-item">
-                    <span>about:blank Cloak (Hide in Blank Page)</span>
-                    <button class="launch-btn" id="aboutblank-btn" style="width: 200px; padding: 8px;">Open in about:blank</button>
+                    <span>about:blank Cloak</span>
+                    <button class="launch-btn" id="aboutblank-btn" style="width:200px;padding:8px;">Open in about:blank</button>
                 </div>
                 <div class="setting-item">
                     <span>Reflection Cloak (Distance View Protection)</span>
@@ -300,70 +260,55 @@
             <div class="settings-group">
                 <h3>Launch Options</h3>
                 <div class="setting-item">
-                    <span>Default Game Directory</span>
-                    <input type="text" class="text-input" value="C:/SolusMS/games/" style="width: 300px;">
-                </div>
-                <div class="setting-item">
                     <span>Enable Game Overlay</span>
                     <label class="switch"><input type="checkbox" id="game-overlay-toggle"><span class="slider"></span></label>
                 </div>
             </div>
         </div>
 
-        <div id="about-page" style="display: none;">
+        <div id="about-page" style="display:none;">
             <header class="header"><h2>About Solus MS</h2></header>
             <div class="about-content">
-
-                <!-- ADDED: Cloud gaming hero section -->
                 <div class="about-cloud-hero">
-                    <h2><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg> Cloud Gaming, Redefined.</h2>
-                    <p>Solus MS now features built-in CloudMoon streaming. Sign in with Google to launch Android games directly in the cloud &mdash; no installs, no downloads, no hardware limits. Built by katsugachi.</p>
-                    <span class="version-chip">Version 2.2.0 &middot; Cloud Edition</span>
+                    <h2>&#9729; Cloud Gaming, Redefined.</h2>
+                    <p>Solus MS features built-in CloudMoon streaming — fully self-hosted on your own GitHub Pages. Sign in to launch Android games in the cloud with no time limits, no ads, no installs. Built by katsugachi.</p>
+                    <span class="version-chip">Version 2.3.0 &middot; Self-Hosted Cloud Edition</span>
                 </div>
-
                 <div class="cloud-feature-grid">
                     <div class="cloud-feature-tile">
-                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
-                        <h4>Cloud Streaming</h4>
-                        <p>Real Android instances via CloudMoon. Play mobile games at full fidelity, right in your browser.</p>
+                        <div class="icon">&#9729;</div>
+                        <h4>Self-Hosted Streaming</h4>
+                        <p>CloudMoon streams now run through your GitHub Pages run-site — no redirects to external sites.</p>
                     </div>
                     <div class="cloud-feature-tile">
-                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M12.65 10A6 6 0 1 0 7 19h.35l1.4-1.4L7.4 16.2l1.4-1.4 1.4 1.4L11.6 14.8l1.4 1.4-1.4 1.4.35.35V19H15l5-5v-1.35A6.009 6.009 0 0 0 12.65 10zM7 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></div>
-                        <h4>Google Sign-In</h4>
-                        <p>One-click auth links your Google account to a live CloudMoon session instantly.</p>
+                        <div class="icon">&#8734;</div>
+                        <h4>No Time Limits</h4>
+                        <p>The 15-minute ad timer has been removed. Play as long as your CloudMoon session allows.</p>
                     </div>
                     <div class="cloud-feature-tile">
-                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                        <div class="icon">&#128065;</div>
                         <h4>Stealth Features</h4>
-                        <p>Tab cloak, invisibility cloak, panic key, and reflection cloaking &mdash; all built in.</p>
+                        <p>Tab cloak, invisibility cloak, panic key, and reflection cloaking — all built in.</p>
                     </div>
                 </div>
-
-                <p style="margin-bottom: 15px;">
-                    Solus MS is a custom browser emulator launching interface designed by katsugachi on GitHub.<br>Features include tab cloaking to disguise as any tab easily. Made completely in HTML and has reflection cloaking to avoid being seen even from direct view at an angle<br><br>For Requests, Reviews And Discussion, Comment In Issues in the <a href="https://github.com/Katsugachi/Solus-MS">Official Github Repo</a>
+                <p style="margin-bottom:15px;">
+                    Solus MS is a custom browser emulator / game launching interface. Made completely in HTML.<br><br>
+                    For Requests, Reviews And Discussion, comment in Issues on the <a href="https://github.com/Katsugachi/Solus-MS">Official Github Repo</a>
                 </p>
-
                 <div class="settings-group">
                     <h3>Version Details</h3>
-                    <div class="setting-item">
-                        <span>Application Version</span>
-                        <strong>2.2.0 (Cloud Edition)</strong>
-                    </div>
+                    <div class="setting-item"><span>Application Version</span><strong>2.3.0 (Self-Hosted Cloud)</strong></div>
                     <div class="setting-item">
                         <span>Interface Theme</span>
-                        <select id="theme-select" class="text-input" style="width: 200px;">
+                        <select id="theme-select" class="text-input" style="width:200px;">
                             <option value="dark">Deep Blue (Dark)</option>
                             <option value="light">Light Mode</option>
                             <option value="glass">Glass</option>
                         </select>
                     </div>
-                    <div class="setting-item"><strong>Alternate Links - Most To Least Updated Top To Bottom</strong></div>
-                    <div class="setting-item"><span>Official Link - Github Pages</span><a href="https://katsugachi.github.io/Solus-MS/">https://katsugachi.github.io/Solus-MS/</a></div>
+                    <div class="setting-item"><span>Experiment Site</span><a href="https://katsugachi.github.io/Experiment-Solus-MS/">https://katsugachi.github.io/Experiment-Solus-MS/</a></div>
+                    <div class="setting-item"><span>Official Link</span><a href="https://katsugachi.github.io/Solus-MS/">https://katsugachi.github.io/Solus-MS/</a></div>
                     <div class="setting-item"><span>Cloudflare Pages</span><a href="https://solus-ms.pages.dev/">https://solus-ms.pages.dev/</a></div>
-                    <div class="setting-item"><span>Vercel</span><a href="https://solus-ms.vercel.app/">https://solus-ms.vercel.app/</a></div>
-                    <div class="setting-item"><span>Netlify</span><a href="https://solus-ms.netlify.app/">https://solus-ms.netlify.app/</a></div>
-                    <div class="setting-item"><span>Google Translate?</span><a href="https://translate.google.com/translate?sl=auto&amp;tl=en&amp;u=https://katsugachi.github.io/Solus-MS/">https://translate.google.com/auto/https://katsugachi.github.io/Solus-MS/</a></div>
-                    <div class="setting-item"><span>Google Sites</span><a href="https://sites.google.com/view/solusms/home">https://sites.google.com/view/solusms/home</a></div>
                     <div class="setting-item"><span>Secret Game</span><a href="https://coffee-tea-and-games.github.io/Claude---Go-/">???</a></div>
                 </div>
             </div>
@@ -371,10 +316,10 @@
 
     </div>
 
-    <!-- ADDED: Cloud Launch Modal -->
+    <!-- Cloud Launch Modal -->
     <div class="modal-overlay" id="cloud-modal">
         <div class="modal-box">
-            <h3 id="modal-title"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" style="vertical-align:middle"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg> Connecting to Cloud&hellip;</h3>
+            <h3 id="modal-title">&#9729; Connecting to Cloud&hellip;</h3>
             <p id="modal-body">
                 <span class="modal-spinner" id="modal-spinner"></span>
                 <span id="modal-status">Authenticating with CloudMoon&hellip;</span>
@@ -383,10 +328,11 @@
         </div>
     </div>
 
-    <!-- FIX 1: token-modal moved HERE (before scripts) so getElementById works at script parse time -->
+    <!-- Token Modal -->
     <div class="modal-overlay" id="token-modal">
         <div class="modal-box" style="max-width:600px;width:90%;padding:36px">
             <h3 style="margin-bottom:20px;font-size:1.4rem">&#9729; Connect CloudMoon</h3>
+            <p style="font-size:0.8rem;opacity:0.7;margin-bottom:12px;">Go to <a href="https://web.cloudmoonapp.com" target="_blank" style="color:var(--accent-blue);">web.cloudmoonapp.com</a>, open the browser console (F12), paste the command below and copy the token:</p>
             <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.4);border-radius:8px;padding:14px 16px;margin-bottom:18px;font-family:monospace;font-size:0.85rem;border:1px solid var(--border-color)">
                 <span style="flex:1;word-break:break-all">copy(JSON.parse(localStorage.getItem('userData')).token)</span>
                 <button id="token-copy-btn" class="launch-btn" style="padding:6px 14px;font-size:0.8rem;white-space:nowrap;width:auto;flex-shrink:0">Copy</button>
@@ -394,41 +340,36 @@
             <textarea id="token-input" class="textarea-input" style="min-height:100px;font-size:0.85rem;width:100%;box-sizing:border-box" placeholder="Paste token here…"></textarea>
             <div style="display:flex;gap:12px;margin-top:18px">
                 <button id="token-submit-btn" class="launch-btn" style="width:auto;padding:10px 28px;font-size:1rem">Connect</button>
-                <!-- FIX 2: removed launch-btn class so Cancel doesn't glow blue on hover -->
                 <button id="token-modal-close" style="width:auto;padding:10px 28px;font-size:1rem;background:#444;color:var(--text-light);border:1px solid var(--border-color);border-radius:4px;cursor:pointer;font-weight:bold">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
- 
-        // ════════════════════════════════════════════════════
-        //  CLOUDMOON CONFIG
-        //  cloudpart2.js  runs on localhost:3000  /user-info
-        // ════════════════════════════════════════════════════
+        // ════════════════════════════════
+        //  CONFIG
+        // ════════════════════════════════
         const CLOUD_API = 'https://cloud-backend-63gq.onrender.com';
+        // ▼▼▼ SELF-HOSTED run-site — no redirect to cloudmoonapp.com ▼▼▼
+        const RUN_SITE_BASE = 'https://katsugachi.github.io/Experiment-Solus-MS/run-site/index.html';
 
-        // SVG icons (replaces all emojis)
         var cloudSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="0.9em" height="0.9em" style="vertical-align:middle;margin-right:3px"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>';
         var lockSVG  = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="0.9em" height="0.9em" style="vertical-align:middle;margin-right:3px"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>';
 
-
         const CLOUD_GAMES = [
-            { name: 'Battle Cats',       cover: 'bcen.jpg', packageId: 'jp.co.ponos.battlecatsen',  quality: 'SD' },
-            { name: 'Genshin Impact',    cover: 'genshin.jpg', packageId: 'com.miHoYo.GenshinImpact', quality: 'HD' },
-            { name: 'Honkai: Star Rail', cover: 'hsr.jpg', packageId: 'com.HoYoverse.hkrpgoversea', quality: 'HD' },
-            { name: 'Brawl Stars',       cover: 'bs.jpg', packageId: 'com.supercell.brawlstars',  quality: 'SD' },
-            { name: 'Clash Royale',      cover: 'cr.jpg', packageId: 'com.supercell.clashroyale', quality: 'SD' },
+            { name: 'Battle Cats',       cover: 'https://katsugachi.github.io/Solus-MS/bcen.jpg',      packageId: 'jp.co.ponos.battlecatsen',   quality: 'SD' },
+            { name: 'Genshin Impact',    cover: 'https://katsugachi.github.io/Solus-MS/genshin.jpg',   packageId: 'com.miHoYo.GenshinImpact',   quality: 'HD' },
+            { name: 'Honkai: Star Rail', cover: 'https://katsugachi.github.io/Solus-MS/hsr.jpg',       packageId: 'com.HoYoverse.hkrpgoversea', quality: 'HD' },
+            { name: 'Brawl Stars',       cover: 'https://katsugachi.github.io/Solus-MS/bs.jpg',        packageId: 'com.supercell.brawlstars',   quality: 'SD' },
+            { name: 'Clash Royale',      cover: 'https://katsugachi.github.io/Solus-MS/cr.jpg',        packageId: 'com.supercell.clashroyale',  quality: 'SD' },
         ];
 
-        // ── AUTH STATE ────────────────────────────────────────
+        // ── AUTH STATE ──────────────────
         let cloudSession = null;
         const statusDot  = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
         function setStatus(cls, txt) { statusDot.className = 'status-dot' + (cls ? ' '+cls : ''); statusText.textContent = txt; }
 
-        // ── GOOGLE SIGN-IN ────────────────────────────────────
-    
         document.getElementById('sign-out-btn').onclick = function() {
             cloudSession = null;
             document.getElementById('user-info-card').classList.remove('visible');
@@ -437,30 +378,36 @@
             loadGames();
         };
 
-        // ── CLOUD LAUNCH (mirrors cloudpart1.js buildAndroidInstanceId) ──
+        // ── b64url helper ───────────────
         function b64url(str) { return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,''); }
 
+        // ── CLOUD LAUNCH ────────────────
         async function launchCloudGame(game) {
-            // FIX 3: open token modal instead of alert when not signed in
             if (!cloudSession) {
                 document.getElementById('token-input').value = '';
                 document.getElementById('token-modal').classList.add('open');
                 return;
             }
-            openModal(cloudSVG + ' Launching ' + game.name);
+            openModal('&#9729; Launching ' + game.name);
             setModalStatus('Building CloudMoon session\u2026');
             try {
                 var coorUrl    = 'https://coor-la.prod.cloudmoonapp.com';
-                var instanceId = b64url(JSON.stringify({ userId: cloudSession.user_id, androidName: 'SolusMSDevice', androidIp: '127.0.0.1', svc: '', coorUrl: coorUrl }));
-                var url =
-                    'https://www.cloudmoonapp.com/run-site/index.html' +
-                    '?userid='              + encodeURIComponent(cloudSession.android_id) +
-                    '&game='                + encodeURIComponent(game.packageId) +
-                    '&android_instance_id=' + encodeURIComponent(instanceId) +
-                    '&coor_url='            + encodeURIComponent(coorUrl) +
-                    '&uuid='                + encodeURIComponent(cloudSession.user_id) +
-                    '&quality='             + game.quality +
-                    '&token='               + encodeURIComponent(cloudSession.token);
+                var instanceId = b64url(JSON.stringify({
+                    userId: cloudSession.user_id,
+                    androidName: 'SolusMSDevice',
+                    androidIp: '127.0.0.1',
+                    svc: '',
+                    coorUrl: coorUrl
+                }));
+                // ▼▼▼ Points to OUR run-site instead of cloudmoonapp.com ▼▼▼
+                var url = RUN_SITE_BASE
+                    + '?userid='              + encodeURIComponent(cloudSession.android_id)
+                    + '&game='                + encodeURIComponent(game.packageId)
+                    + '&android_instance_id=' + encodeURIComponent(instanceId)
+                    + '&coor_url='            + encodeURIComponent(coorUrl)
+                    + '&uuid='                + encodeURIComponent(cloudSession.user_id)
+                    + '&quality='             + game.quality
+                    + '&token='               + encodeURIComponent(cloudSession.token);
                 setModalStatus('\u2713 Session ready \u2014 opening ' + game.name + '\u2026');
                 document.getElementById('modal-spinner').style.display = 'none';
                 setTimeout(function() { closeModal(); window.open(url, '_blank'); }, 700);
@@ -472,7 +419,7 @@
         }
 
         function openModal(title) {
-            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-title').innerHTML = title;
             document.getElementById('modal-spinner').style.display = '';
             document.getElementById('modal-close-btn').textContent = 'Cancel';
             document.getElementById('cloud-modal').classList.add('open');
@@ -481,49 +428,49 @@
         function setModalStatus(msg) { document.getElementById('modal-status').textContent = msg; }
         document.getElementById('modal-close-btn').onclick = closeModal;
 
-        // ── STATIC GAMES (original list unchanged) ────────────
+        // ── STATIC GAMES ────────────────
         const staticGames = [
-            { name: "Hollow Knight", cover: "hk.jpg", url: "StrHK.html" },
-            { name: "Minecraft 1.21.6", cover: "minecraft.jpg", url: "mc1122.html" },
-            { name: "Geometry Dash Lite", cover: "gd.png", url: "gd.html" },
-            { name: "Undertale", cover: "undertale.png", url: "undertale.html" },
-            { name: "Deltarune", cover: "deltarune.png", url: "deltarune.html" },
-            { name: "Balatro", cover: "balatro.jpg", url: "balatro.html" },
-            { name: "Celeste", cover: "celeste.jpg", url: "celeste.html" },
-            { name: "OMORI", cover: "omori.png", url: "omori.html" },
-            { name: "Sheepy : A Short Adventure", cover: "sheepy.png", url: "sheepy.html" },
-            { name: "GTA Vice City", cover: "gta.png", url: "gta.html" },
-            { name: "OSU!", cover: "osu.png", url: "osu.html" },
-            { name: "Level Devil", cover: "leveldevil.png", url: "leveldevil.html" },
-            { name: "Untitled Goose Game", cover: "utgg.jpg", url: "utgg.html" },
-            { name: "Cuphead", cover: "cuphead.png", url: "cuphead.html" },
-            { name: "Terraria", cover: "terraria.jpg", url: "terraria.html" },
-            { name: "Crossy Road", cover: "cross.png", url: "cross.html" },
-            { name: "Slope", cover: "slope.jpg", url: "Slope.html" },
-            { name: "Undertale Yellow", cover: "uy.png", url: "undertaley.html" },
-            { name: "Final Fantasy VII", cover: "ff7.png", url: "ff7.html" },
-            { name: "Run 3", cover: "run-3.png", url: "run3.html" },
-            { name: "Legend Of Zelda: Ocarina Of Time", cover: "zelda.png", url: "zelda.html" },
-            { name: "Mario Kart DS", cover: "mariods.png", url: "mariods.html" },
+            { name: "Hollow Knight",                   cover: "hk.jpg",        url: "StrHK.html" },
+            { name: "Minecraft 1.21.6",                cover: "minecraft.jpg",  url: "mc1122.html" },
+            { name: "Geometry Dash Lite",              cover: "gd.png",         url: "gd.html" },
+            { name: "Undertale",                       cover: "undertale.png",  url: "undertale.html" },
+            { name: "Deltarune",                       cover: "deltarune.png",  url: "deltarune.html" },
+            { name: "Balatro",                         cover: "balatro.jpg",    url: "balatro.html" },
+            { name: "Celeste",                         cover: "celeste.jpg",    url: "celeste.html" },
+            { name: "OMORI",                           cover: "omori.png",      url: "omori.html" },
+            { name: "Sheepy : A Short Adventure",      cover: "sheepy.png",     url: "sheepy.html" },
+            { name: "GTA Vice City",                   cover: "gta.png",        url: "gta.html" },
+            { name: "OSU!",                            cover: "osu.png",        url: "osu.html" },
+            { name: "Level Devil",                     cover: "leveldevil.png", url: "leveldevil.html" },
+            { name: "Untitled Goose Game",             cover: "utgg.jpg",       url: "utgg.html" },
+            { name: "Cuphead",                         cover: "cuphead.png",    url: "cuphead.html" },
+            { name: "Terraria",                        cover: "terraria.jpg",   url: "terraria.html" },
+            { name: "Crossy Road",                     cover: "cross.png",      url: "cross.html" },
+            { name: "Slope",                           cover: "slope.jpg",      url: "Slope.html" },
+            { name: "Undertale Yellow",                cover: "uy.png",         url: "undertaley.html" },
+            { name: "Final Fantasy VII",               cover: "ff7.png",        url: "ff7.html" },
+            { name: "Run 3",                           cover: "run-3.png",      url: "run3.html" },
+            { name: "Legend Of Zelda: Ocarina Of Time",cover: "zelda.png",      url: "zelda.html" },
+            { name: "Mario Kart DS",                   cover: "mariods.png",    url: "mariods.html" },
         ];
 
-        // ── INDEXEDDB ─────────────────────────────────────────
+        // ── INDEXEDDB ───────────────────
         let db;
         const DB_NAME = 'SolusGamesDB', STORE_NAME = 'customGames';
         function initDB() {
             return new Promise(function(resolve, reject) {
                 if (!window.indexedDB) { reject('IndexedDB not supported'); return; }
-                var request = indexedDB.open(DB_NAME, 1);
-                request.onupgradeneeded = function(event) { db = event.target.result; db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true }); };
-                request.onsuccess = function(event) { db = event.target.result; resolve(db); };
-                request.onerror   = function() { reject('Failed to open IndexedDB'); };
+                var req = indexedDB.open(DB_NAME, 1);
+                req.onupgradeneeded = function(e) { db = e.target.result; db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true }); };
+                req.onsuccess = function(e) { db = e.target.result; resolve(db); };
+                req.onerror   = function() { reject('Failed to open IndexedDB'); };
             });
         }
-        function saveGame(game) { return new Promise(function(res,rej) { var r = db.transaction([STORE_NAME],'readwrite').objectStore(STORE_NAME).add(game); r.onsuccess = function() { res(r.result); }; r.onerror = function(e) { rej(e.target.error); }; }); }
-        function getAllGames()   { return new Promise(function(res,rej) { if (!db) return res([]); var r = db.transaction([STORE_NAME],'readonly').objectStore(STORE_NAME).getAll(); r.onsuccess = function() { res(r.result); }; r.onerror = function(e) { rej(e.target.error); }; }); }
-        function deleteGame(id) { return new Promise(function(res,rej) { var r = db.transaction([STORE_NAME],'readwrite').objectStore(STORE_NAME).delete(id); r.onsuccess = function() { res(); }; r.onerror = function(e) { rej(e.target.error); }; }); }
+        function saveGame(game)  { return new Promise(function(res,rej) { var r = db.transaction([STORE_NAME],'readwrite').objectStore(STORE_NAME).add(game); r.onsuccess = function() { res(r.result); }; r.onerror = function(e) { rej(e.target.error); }; }); }
+        function getAllGames()    { return new Promise(function(res,rej) { if (!db) return res([]); var r = db.transaction([STORE_NAME],'readonly').objectStore(STORE_NAME).getAll(); r.onsuccess = function() { res(r.result); }; r.onerror = function(e) { rej(e.target.error); }; }); }
+        function deleteGame(id)  { return new Promise(function(res,rej) { var r = db.transaction([STORE_NAME],'readwrite').objectStore(STORE_NAME).delete(id); r.onsuccess = function() { res(); }; r.onerror = function(e) { rej(e.target.error); }; }); }
 
-        // ── CARD BUILDERS ─────────────────────────────────────
+        // ── CARD BUILDERS ───────────────
         const gameLibraryGrid = document.getElementById('game-library-grid');
         const emptyMessage    = document.getElementById('empty-library-message');
         let gameOverlayEnabled = false;
@@ -545,11 +492,9 @@
                 (game.cover ? '' : game.name) + '</div>' +
                 '<div class="game-info"><h3>' + game.name + '</h3>' +
                 '<div class="action-group">' +
-                '<a href="' + launchUrl + '" class="launch-btn" data-game-url="' + launchUrl + '" target="_blank">Launch</a>' +
-                (isCustom ? '<button class="launch-btn delete-btn" data-game-id="' + game.id + '" style="flex-grow: 0.5;">Delete</button>' : '') +
+                '<a href="' + launchUrl + '" class="launch-btn" target="_blank">Launch</a>' +
+                (isCustom ? '<button class="launch-btn delete-btn" data-game-id="' + game.id + '" style="flex-grow:0.5;">Delete</button>' : '') +
                 '</div></div>';
-            var launchBtn = card.querySelector('.launch-btn');
-            launchBtn.addEventListener('click', function(e) { if (gameOverlayEnabled) { e.preventDefault(); window.location.href = launchUrl; } });
             if (isCustom) {
                 card.querySelector('.delete-btn').addEventListener('click', async function(e) {
                     var gameId = parseInt(e.target.dataset.gameId);
@@ -593,7 +538,7 @@
             } catch(e) { console.error(e); }
         }
 
-        // ── NAVIGATION (original logic, unchanged) ────────────
+        // ── NAVIGATION ──────────────────
         const navLibrary  = document.getElementById('nav-library');
         const navSettings = document.getElementById('nav-settings');
         const navAbout    = document.getElementById('nav-about');
@@ -623,15 +568,14 @@
         navAbout.onclick    = function(e) { e.preventDefault(); showPage('about'); };
         navAddGame.onclick  = function(e) { e.preventDefault(); showPage('add-game'); };
 
-        // ── THEME (original logic) ────────────────────────────
-        const themeSelect = document.getElementById('theme-select');
-        themeSelect.onchange = function() {
+        // ── THEME ───────────────────────
+        document.getElementById('theme-select').onchange = function() {
             document.body.classList.remove('light-theme', 'glass-theme');
             if (this.value === 'light') document.body.classList.add('light-theme');
             else if (this.value === 'glass') document.body.classList.add('glass-theme');
         };
 
-        // ── ADD GAME FORM (original logic) ────────────────────
+        // ── ADD GAME FORM ───────────────
         function setupFormOptions(name, optionGroups) {
             document.querySelectorAll('input[name="' + name + '"]').forEach(function(radio) {
                 radio.closest('.upload-option').onclick = function() {
@@ -658,12 +602,12 @@
             if (htmlSource === 'paste') htmlContent = document.getElementById('html-code').value.trim();
             else if (document.getElementById('html-file').files[0]) htmlContent = await new Promise(function(r) { var fr = new FileReader(); fr.onload = function() { r(fr.result); }; fr.readAsText(document.getElementById('html-file').files[0]); });
             if (!htmlContent) return alert('HTML required');
-            await saveGame({ name: name, cover: coverData, htmlContent: htmlContent, timestamp: Date.now() });
+            await saveGame({ name, cover: coverData, htmlContent, timestamp: Date.now() });
             document.getElementById('add-game-form').reset();
             showPage('library');
         };
 
-        // ── TAB CLOAK (original logic) ────────────────────────
+        // ── TAB CLOAK ───────────────────
         const tabNameInput    = document.getElementById('tab-name-input');
         const faviconUrlInput = document.getElementById('favicon-url-input');
         const favIconPng = document.getElementById('favicon-png');
@@ -672,47 +616,36 @@
         faviconUrlInput.oninput = function(e) { var url = e.target.value.trim() || 'favicon.ico'; favIconPng.href = favIconIco.href = url; };
 
         var invisibilityEnabled = false, originalTitle = document.title, originalFavicon = favIconPng.href;
-        var invisibilityToggle = document.getElementById('invisibility-cloak-toggle');
-        function handleInvisibility() {
-            if (!invisibilityEnabled) return;
-            if (document.hidden) { document.title = '\u3164'; favIconPng.href = favIconIco.href = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }
-            else { document.title = originalTitle; favIconPng.href = favIconIco.href = originalFavicon; }
-        }
-        invisibilityToggle.onchange = function() {
+        document.getElementById('invisibility-cloak-toggle').onchange = function() {
             invisibilityEnabled = this.checked;
-            if (invisibilityEnabled) { originalTitle = document.title; originalFavicon = favIconPng.href; document.addEventListener('visibilitychange', handleInvisibility); if (document.hidden) { handleInvisibility(); } }
+            function handleInvisibility() {
+                if (!invisibilityEnabled) return;
+                if (document.hidden) { document.title = '\u3164'; favIconPng.href = favIconIco.href = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }
+                else { document.title = originalTitle; favIconPng.href = favIconIco.href = originalFavicon; }
+            }
+            if (invisibilityEnabled) { originalTitle = document.title; originalFavicon = favIconPng.href; document.addEventListener('visibilitychange', handleInvisibility); }
             else { document.removeEventListener('visibilitychange', handleInvisibility); document.title = originalTitle; favIconPng.href = favIconIco.href = originalFavicon; }
         };
-        tabNameInput.addEventListener('input',    function() { originalTitle   = tabNameInput.value.trim()    || 'Solus MS - Game Launcher'; });
-        faviconUrlInput.addEventListener('input', function() { originalFavicon = faviconUrlInput.value.trim() || 'favicon.ico'; });
 
         document.getElementById('reflection-cloak-toggle').onchange = function() { document.body.classList.toggle('reflection-active', this.checked); };
         document.getElementById('game-overlay-toggle').onchange     = function() { gameOverlayEnabled = this.checked; };
 
-        // ── PANIC KEY (original logic) ────────────────────────
+        // ── PANIC KEY ───────────────────
         var panicKeyEnabled = false, panicMode = 'redirect', panicUrl = 'https://classroom.google.com', backgroundTab = null;
-        var panicKeyToggle      = document.getElementById('panic-key-toggle');
-        var panicSettingsGroup  = document.getElementById('panic-settings-group');
-        var panicModeSelect     = document.getElementById('panic-mode-select');
-        var panicRedirectSetting   = document.getElementById('panic-redirect-setting');
-        var panicBackgroundSetting = document.getElementById('panic-background-setting');
-        var panicUrlInput       = document.getElementById('panic-url-input');
-        var panicBackgroundUrl  = document.getElementById('panic-background-url');
-        var openBackgroundTabBtn = document.getElementById('open-background-tab');
-
-        panicKeyToggle.onchange = function() { panicKeyEnabled = this.checked; panicSettingsGroup.style.display = this.checked ? 'flex' : 'none'; };
-        panicModeSelect.onchange = function() {
+        document.getElementById('panic-key-toggle').onchange = function() { panicKeyEnabled = this.checked; document.getElementById('panic-settings-group').style.display = this.checked ? 'flex' : 'none'; };
+        document.getElementById('panic-mode-select').onchange = function() {
             panicMode = this.value;
-            panicRedirectSetting.style.display  = panicMode === 'redirect'   ? 'flex' : 'none';
-            panicBackgroundSetting.style.display = panicMode === 'background' ? 'flex' : 'none';
+            document.getElementById('panic-redirect-setting').style.display  = panicMode === 'redirect'   ? 'flex' : 'none';
+            document.getElementById('panic-background-setting').style.display = panicMode === 'background' ? 'flex' : 'none';
         };
-        panicUrlInput.oninput      = function() { panicUrl = this.value.trim() || 'https://classroom.google.com'; };
-        panicBackgroundUrl.oninput = function() { panicUrl = this.value.trim() || 'https://classroom.google.com'; };
-        openBackgroundTabBtn.onclick = function() {
-            var url = panicBackgroundUrl.value.trim() || 'https://classroom.google.com';
+        document.getElementById('panic-url-input').oninput      = function() { panicUrl = this.value.trim() || 'https://classroom.google.com'; };
+        document.getElementById('panic-background-url').oninput = function() { panicUrl = this.value.trim() || 'https://classroom.google.com'; };
+        document.getElementById('open-background-tab').onclick = function() {
+            var url = document.getElementById('panic-background-url').value.trim() || 'https://classroom.google.com';
             backgroundTab = window.open(url, '_blank');
-            if (backgroundTab) { window.focus(); openBackgroundTabBtn.textContent = 'Tab Ready \u2713'; openBackgroundTabBtn.style.background = '#28a745'; }
-            else { openBackgroundTabBtn.textContent = 'Pop-up Blocked!'; openBackgroundTabBtn.style.background = '#dc3545'; setTimeout(function() { openBackgroundTabBtn.textContent = 'Open Background Tab'; openBackgroundTabBtn.style.background = ''; }, 2000); }
+            var btn = document.getElementById('open-background-tab');
+            if (backgroundTab) { window.focus(); btn.textContent = 'Tab Ready \u2713'; btn.style.background = '#28a745'; }
+            else { btn.textContent = 'Pop-up Blocked!'; btn.style.background = '#dc3545'; setTimeout(function() { btn.textContent = 'Open Background Tab'; btn.style.background = ''; }, 2000); }
         };
         document.addEventListener('keydown', function(e) {
             if (panicKeyEnabled && e.key === 'Escape') {
@@ -722,68 +655,61 @@
             }
         });
 
-        // ── ABOUT:BLANK (original logic) ─────────────────────
+        // ── ABOUT:BLANK ─────────────────
         document.getElementById('aboutblank-btn').onclick = function() {
             var win = window.open();
             win.document.body.style.margin = '0'; win.document.body.style.height = '100vh';
             var iframe = win.document.createElement('iframe');
             iframe.style.border = 'none'; iframe.style.width = '100%'; iframe.style.height = '100%'; iframe.style.margin = '0';
-            iframe.src = 'https://katsugachi.github.io/Solus-MS/';
+            iframe.src = 'https://katsugachi.github.io/Experiment-Solus-MS/';
             win.document.body.appendChild(iframe);
             window.location.replace('https://www.google.com');
         };
 
-        // ── INIT ──────────────────────────────────────────────
+        // ── INIT ────────────────────────
         (async function initialize() {
             try { await initDB(); showPage('library'); }
-            catch(e) { console.error('DB Initialization failed:', e); showPage('library'); }
+            catch(e) { console.error('DB init failed:', e); showPage('library'); }
         })();
     </script>
+
     <script>
-        document.getElementById('google-signin-btn').onclick = () => {
+        // ── TOKEN MODAL ─────────────────
+        document.getElementById('google-signin-btn').onclick = function() {
             document.getElementById('token-input').value = '';
             document.getElementById('token-modal').classList.add('open');
         };
-
-        document.getElementById('token-modal-close').onclick = () => {
+        document.getElementById('token-modal-close').onclick = function() {
             document.getElementById('token-modal').classList.remove('open');
         };
-
-        // FIX 4: execCommand fallback instead of navigator.clipboard (works without HTTPS permissions)
-        document.getElementById('token-copy-btn').onclick = () => {
+        document.getElementById('token-copy-btn').onclick = function() {
             var text = "copy(JSON.parse(localStorage.getItem('userData')).token)";
             var el = document.createElement('textarea');
-            el.value = text;
-            el.style.position = 'fixed';
-            el.style.opacity = '0';
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            const btn = document.getElementById('token-copy-btn');
+            el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+            document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            var btn = document.getElementById('token-copy-btn');
             btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = 'Copy', 2000);
+            setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
         };
-
-        document.getElementById('token-submit-btn').onclick = () => {
-            const token = document.getElementById('token-input').value.trim();
+        document.getElementById('token-submit-btn').onclick = function() {
+            var token = document.getElementById('token-input').value.trim();
             if (!token) return;
             document.getElementById('token-modal').classList.remove('open');
-            setStatus('connecting', 'Connecting to CloudMoon…');
+            setStatus('connecting', 'Connecting to CloudMoon\u2026');
             fetch(CLOUD_API + '/auth/token?token=' + encodeURIComponent(token))
-                .then(r => r.json())
-                .then(data => {
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
                     if (data.error) throw new Error(data.error);
                     cloudSession = { token, user_id: data.user_id, android_id: data.android_id };
                     document.getElementById('google-btn-wrapper').style.display = 'none';
                     document.getElementById('user-info-card').classList.add('visible');
-                    document.getElementById('user-name').textContent  = data.name  || 'Cloud User';
-                    document.getElementById('user-email').textContent = data.email || '';
+                    document.getElementById('user-name').textContent  = data.name    || 'Cloud User';
+                    document.getElementById('user-email').textContent = data.email   || '';
                     document.getElementById('user-avatar').src        = data.picture || '';
-                    setStatus('connected', 'CloudMoon connected ✓');
+                    setStatus('connected', 'CloudMoon connected \u2713');
                     loadGames();
                 })
-                .catch(err => {
+                .catch(function(err) {
                     setStatus('error', 'Failed: ' + err.message);
                     document.getElementById('token-modal').classList.add('open');
                 });
