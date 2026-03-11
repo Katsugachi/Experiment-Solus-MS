@@ -720,13 +720,8 @@
     <script>
         document.getElementById('google-signin-btn').onclick = () => {
             const token = prompt(
-                'Paste your CloudMoon token below.\n\n' +
-                'To get it:\n' +
-                '1. Go to web.cloudmoonapp.com and sign in\n' +
-                '2. Press F12 → Console tab\n' +
-                '3. Paste this command and press Enter:\n\n' +
+                'Enter Connection Token' +
                 '   copy(JSON.parse(localStorage.getItem(\'userData\')).token)\n\n' +
-                '4. Your token is now copied — paste it here:'
             );
             if (!token) return;
 
