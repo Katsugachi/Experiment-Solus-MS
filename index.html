@@ -389,31 +389,25 @@
                 return;
             }
             openModal('&#9729; Launching ' + game.name);
-            setModalStatus('Building CloudMoon session\u2026');
+            setModalStatus('Allocating Android instance…');
             try {
-                var coorUrl    = 'https://coor-la.prod.cloudmoonapp.com';
-                var instanceId = b64url(JSON.stringify({
-                    userId: cloudSession.user_id,
-                    androidName: 'SolusMSDevice',
-                    androidIp: '127.0.0.1',
-                    svc: '',
-                    coorUrl: coorUrl
-                }));
-                // ▼▼▼ Points to OUR run-site instead of cloudmoonapp.com ▼▼▼
-                var url = RUN_SITE_BASE
-                    + '?userid='              + encodeURIComponent(cloudSession.android_id)
-                    + '&game='                + encodeURIComponent(game.packageId)
-                    + '&android_instance_id=' + encodeURIComponent(instanceId)
-                    + '&coor_url='            + encodeURIComponent(coorUrl)
-                    + '&uuid='                + encodeURIComponent(cloudSession.user_id)
-                    + '&quality='             + game.quality
-                    + '&token='               + encodeURIComponent(cloudSession.token);
-                setModalStatus('\u2713 Session ready \u2014 opening ' + game.name + '\u2026');
+                // Call /launch on the backend — it runs phone/connect to get the
+                // real Android VM IP before building the instance ID. Without this
+                // the coordinator returns errorCode 1 ("Server is busy") every time.
+                var resp = await fetch(CLOUD_API + '/launch'
+                    + '?token='      + encodeURIComponent(cloudSession.token)
+                    + '&android_id=' + encodeURIComponent(cloudSession.android_id)
+                    + '&user_id='    + encodeURIComponent(cloudSession.user_id)
+                    + '&game='       + encodeURIComponent(game.packageId)
+                    + '&quality='    + game.quality);
+                var data = await resp.json();
+                if (data.error) throw new Error(data.error);
+                setModalStatus('✓ Instance ready — opening ' + game.name + '…');
                 document.getElementById('modal-spinner').style.display = 'none';
-                setTimeout(function() { closeModal(); window.open(url, '_blank'); }, 700);
+                setTimeout(function() { closeModal(); window.open(data.url, '_blank'); }, 700);
             } catch(err) {
                 document.getElementById('modal-spinner').style.display = 'none';
-                setModalStatus('\u2717 Error: ' + err.message);
+                setModalStatus('✗ Error: ' + err.message);
                 document.getElementById('modal-close-btn').textContent = 'Close';
             }
         }
@@ -701,6 +695,7 @@
                 .then(function(data) {
                     if (data.error) throw new Error(data.error);
                     cloudSession = { token, user_id: data.user_id, android_id: data.android_id };
+                    console.log('[cloudSession] user_id:', data.user_id, 'android_id:', data.android_id);
                     document.getElementById('google-btn-wrapper').style.display = 'none';
                     document.getElementById('user-info-card').classList.add('visible');
                     document.getElementById('user-name').textContent  = data.name    || 'Cloud User';
