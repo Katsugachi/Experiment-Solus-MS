@@ -757,12 +757,11 @@
     <div class="modal-overlay" id="token-modal">
         <div class="modal-box" style="max-width:480px">
             <h3 style="margin-bottom:12px">☁ Connect CloudMoon</h3>
-            <p style="font-size:0.78rem;opacity:0.8;margin-bottom:10px">Run this in the <a href="https://web.cloudmoonapp.com" target="_blank" style="color:var(--accent-blue)">CloudMoon</a> console, then paste the result below:</p>
             <div style="display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-family:monospace;font-size:0.72rem">
                 <span style="flex:1;word-break:break-all;opacity:0.9">copy(JSON.parse(localStorage.getItem('userData')).token)</span>
                 <button id="token-copy-btn" class="launch-btn" style="padding:4px 10px;font-size:0.7rem;white-space:nowrap;width:auto">Copy</button>
             </div>
-            <textarea id="token-input" class="textarea-input" style="min-height:70px;font-size:0.7rem;width:100%;box-sizing:border-box" placeholder="eyJhbGci…"></textarea>
+            <textarea id="token-input" class="textarea-input" style="min-height:70px;font-size:0.7rem;width:100%;box-sizing:border-box" placeholder="token goes here"></textarea>
             <div style="display:flex;gap:10px;margin-top:12px">
                 <button id="token-submit-btn" class="launch-btn" style="width:auto;padding:8px 20px">Connect</button>
                 <button id="token-modal-close" class="modal-close">Cancel</button>
