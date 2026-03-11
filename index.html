@@ -719,7 +719,12 @@
     </script>
     <script>
         document.getElementById('google-signin-btn').onclick = () => {
+            document.getElementById('token-input').value = '';
             document.getElementById('token-modal').classList.add('open');
+        };
+
+        document.getElementById('token-modal-close').onclick = () => {
+            document.getElementById('token-modal').classList.remove('open');
         };
 
         document.getElementById('token-copy-btn').onclick = () => {
@@ -747,11 +752,10 @@
                     setStatus('connected', 'CloudMoon connected ✓');
                     loadGames();
                 })
-                .catch(err => setStatus('error', 'Failed: ' + err.message));
-        };
-
-        document.getElementById('token-modal-close').onclick = () => {
-            document.getElementById('token-modal').classList.remove('open');
+                .catch(err => {
+                    setStatus('error', 'Failed: ' + err.message);
+                    document.getElementById('token-modal').classList.add('open');
+                });
         };
     </script>
     <div class="modal-overlay" id="token-modal">
